@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Tsum Tsum</title>
+    <style>
+    @font-face {
+        font-family: 'Makinas scrap';
+        src:url(./font/Makinas-scrap-5.woff) format('woff'),
+            url(./font/Makinas-scrap-5.otf) format('otf');
+    }
+    body {
+        font-family: 'Makinas scrap';
+        color: #fff;
+        background-color: #000;
+    }
+    a {
+        color: #fff;
+        text-decoration: none;
+    }
+    ul {
+        list-style: none;
+        padding: 0;
+    }
+    .container {
+        width: 640px;
+        margin: 0 auto;
+    }
+    #gameHome {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        flex-direction: column;
+        width: 100vw;
+        height: 100vh;
+    }
+    #gameHome__header {
+        text-align: center;
+    }
+    #gemeHome__links {
+        text-align: center;
+    }
+    #gemeHome__links .gameHome__link .link__item {
+        font-size: 24px;
+    }
+    #gemeHome__links .gameHome__link .link__item:hover {
+        color: #ea553a;
+        animation: flashText 0.6s infinite;
+    }
+    @keyframes flashText {
+        50% {
+            opacity: 0.3;
+        }
+    }
+    </style>
+</head>
+<body>
+<div id="gameHome">
+    <div class="container">
+        <header id="gameHome__header">
+            <h1>どっちでストレス発散する？</h1>
+        </header>
+        <main id="gemeHome__main">
+            <ul id="gemeHome__links">
+                <li class="gameHome__link">
+                    <a href="./s_.html" class="link__item">Tsum Tsum S</a>
+                </li>
+                <li class="gameHome__link">
+                    <a href="./y_.html" class="link__item">Tsum Tsum Y</a>
+                </li>
+            </ul>
+        </main>
+    </div>
+</div>
+
+</body>
+</html>
