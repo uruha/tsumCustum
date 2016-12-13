@@ -1,5 +1,6 @@
 'use strict';
 /*global
+    icon,
     enchant,
     Core,
     Class,
@@ -39,18 +40,20 @@ function previewCenter(game) {
 }
 
 window.onload = () => {
-    const WIDTH = 160,
-        HEIGHT = 160,
-        BALL_NUM = 90,
-        PLAYTIME = 30;
+    const WIDTH = 640;
+    const HEIGHT = 640;
+    const BALL_NUM = 90;
+    const PLAYTIME = 30;
     const game = new Core(WIDTH, HEIGHT);
-    previewCenter(game);
+    // previewCenter(game);
     let selectedBalls = [];
     let highScore = 0;
-    const iconPath = 'https://cdn.rawgit.com/wise9/enchant.js/master/images/icon1.png';
+    // const iconPath = 'https://cdn.rawgit.com/wise9/enchant.js/master/images/icon1.png';
+    const iconPath = icon;
+    function labelXPosition(label) { return (game.width - label._boundWidth) / 2; }
 
     const Cursor = Class.create(Sprite, {
-        size: 15,
+        size: 60,
         initialize: function() {
             Sprite.call(this, this.size, this.size);
             this.x = this.y = -100;
@@ -72,6 +75,7 @@ window.onload = () => {
         highScore: 0,
         initialize: function() {
             Label.call(this, this.count);
+            this.font = '36px Play';
             this.updateText();
         },
         charge: function(ballNum) {
@@ -97,7 +101,8 @@ window.onload = () => {
         time: PLAYTIME,
         initialize: function() {
             Label.call(this, 0);
-            this.x = WIDTH - 60;
+            this.x = WIDTH - 150;
+            this.font = '36px Play';
             game.score.resetScore();
         },
         gameOver: function() {
@@ -117,10 +122,10 @@ window.onload = () => {
          * PhyCircleSprite:
          * 円の物理シュミレーション用Sprite
          */
-        size: 8,
+        size: 30,
         variation: 6,
         initialize: function(x, y) {
-            PhyCircleSprite.call(this, this.size, enchant.box2d.DYNAMIC_SPRITE, 1.5, 1.0, 0.3, true);
+            PhyCircleSprite.call(this, this.size, enchant.box2d.DYNAMIC_SPRITE, 1.5, 1.0, 0.5, true);
             this.image = game.assets[iconPath];
             this.frame = Math.floor(Math.random() * this.variation);
             this.x = Math.random() * WIDTH - this.size;
@@ -180,9 +185,11 @@ window.onload = () => {
             const startLabel = new Label('CLICK TO START');
             const scoreLabel = new Label('HIGH SCORE ' + game.score.highScore);
 
-            // startLabel.y = HEIGHT / 2 - 10;
-            startLabel.moveTo((game.width - startLabel._boundWidth)/2, HEIGHT / 2 - 10);
-            scoreLabel.y = HEIGHT - 20;
+            startLabel.font = '36px Play';
+            scoreLabel.font = '36px Play';
+
+            startLabel.moveTo(labelXPosition(startLabel), HEIGHT / 2 - 10);
+            scoreLabel.moveTo(labelXPosition(scoreLabel), HEIGHT - 36);
             this.addChild(startLabel);
             if (game.score.highScore > 0) this.addChild(scoreLabel);
         },
@@ -220,13 +227,18 @@ window.onload = () => {
         initialize: function() {
             Scene.call(this);
 
-            var timeUpLabel = new Label('TIME UP');
-            var scoreLabel = new Label('SCORE ' + game.score.lastScore);
-            var highScoreLabel = new Label(game.score.isHighScore() ? 'HIGH SCORE!' : '');
+            const timeUpLabel = new Label('TIME UP');
+            const scoreLabel = new Label('SCORE ' + game.score.lastScore);
+            const highScoreLabel = new Label(game.score.isHighScore() ? 'HIGH SCORE!' : '');
 
-            timeUpLabel.y = HEIGHT * 1 / 4;
-            scoreLabel.y = HEIGHT * 2 / 4;
-            highScoreLabel.y = HEIGHT * 2 / 4 + 20;
+            timeUpLabel.font = '36px Play';
+            scoreLabel.font = '36px Play';
+            highScoreLabel.font = '36px Play';
+
+            timeUpLabel.moveTo(labelXPosition(timeUpLabel), HEIGHT * 1 / 4);
+            scoreLabel.moveTo(labelXPosition(scoreLabel), HEIGHT * 2 / 4);
+            highScoreLabel.moveTo(labelXPosition(highScoreLabel), HEIGHT * 2 / 4 + 36);
+
             highScoreLabel.color = 'red';
             this.addChild(timeUpLabel);
             this.addChild(scoreLabel);
