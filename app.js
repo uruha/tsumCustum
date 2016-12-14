@@ -45,10 +45,11 @@ window.onload = () => {
     const BALL_NUM = 90;
     const PLAYTIME = 30;
     const game = new Core(WIDTH, HEIGHT);
-    // previewCenter(game);
+    /** not use */ // previewCenter(game);
     let selectedBalls = [];
     let highScore = 0;
-    // const iconPath = 'https://cdn.rawgit.com/wise9/enchant.js/master/images/icon1.png';
+
+    /** not use */ // const iconPath = 'https://cdn.rawgit.com/wise9/enchant.js/master/images/icon1.png';
     const iconPath = icon;
     function labelXPosition(label) { return (game.width - label._boundWidth) / 2; }
 
@@ -125,7 +126,7 @@ window.onload = () => {
         size: 30,
         variation: 6,
         initialize: function(x, y) {
-            PhyCircleSprite.call(this, this.size, enchant.box2d.DYNAMIC_SPRITE, 1.5, 1.0, 0.5, true);
+            PhyCircleSprite.call(this, this.size, enchant.box2d.DYNAMIC_SPRITE, 1.5, 1.0, 0.8, true);
             this.image = game.assets[iconPath];
             this.frame = Math.floor(Math.random() * this.variation);
             this.x = Math.random() * WIDTH - this.size;
@@ -150,6 +151,11 @@ window.onload = () => {
         ontouchstart: function() {
             this.select();
         },
+        ontouchmove: function(e) {
+            let moveX = e.x - (this.width / 2);
+            let moveY = e.y - (this.height / 2);
+            this.moveTo(moveX, moveY);
+        },
         ontouchend: function() {
             if (selectedBalls.length < 3) {
                 selectedBalls.forEach(function(ball) {
@@ -171,7 +177,7 @@ window.onload = () => {
 
     const Wall = Class.create(PhyBoxSprite, {
         initialize: function(w, h, x, y) {
-            PhyBoxSprite.call(this, w, h, enchant.box2d.STATIC_SPRITE, 0, 1.0, 0, false);
+            PhyBoxSprite.call(this, w, h, enchant.box2d.STATIC_SPRITE, 0, 1.0, 0.3, false);
             this.position = {
                 x,
                 y
@@ -202,7 +208,7 @@ window.onload = () => {
         initialize: function() {
             Scene.call(this);
             /**
-             * @param {world}
+             * @param {object} world
              * 物理シュミレーションを行う世界のクラス
              * y軸方方向への重力加速度9.8m/s^2
              */
